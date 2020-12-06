@@ -1,2 +1,2 @@
 # DevopsWithGithub Hands on Labs
- Hands on Labs with Github Actions
+ Netcore Hands on Labs with Github Actions
