@@ -1,0 +1,113 @@
+name: Hands on Lab for NETCORE
+
+on:
+  push:
+    branches:
+      - labfornetcore
+    paths:
+    - 'README.md' 
+
+env:
+  AZURE_RESOURCE_GROUP: handsonlab               # set this to your Azure Resource group's name  
+  AZURE_LOCATION: eastus                         # set this to your azure resource group location   
+  AZURE_APP_PLAN: netcoreplan                    # set netcoreplan  
+  AZURE_APIAPP_NAME: vijayapiapp    # set this to your application's name
+  AZURE_API_URL: 'https://vijayapiapp.azurewebsites.net/'  
+  AZURE_WEBAPP_NAME: vijaywebapp    # set this to your frontend webapp name
+  AZURE_APIAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
+  AZURE_WEBAPP_PACKAGE_PATH: '.'
+  DOTNET_VERSION: '3.1.x'           # set this to the dot net version to use
+
+jobs:
+  buildAPIAPP:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src/API
+
+    steps:
+      # Checkout the repo to Hosted Runner
+      - uses: actions/checkout@master
+      
+
+   # Authenticating to Azure
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.DEPLOYGITHUB  }}
+        
+# Provision a new API App To Azure
+      - name: Azure CLI script to create a new Web App for Container
+        uses: azure/CLI@v1
+        with:
+         azcliversion: latest
+         inlineScript: |
+           az group create --name ${{ env.AZURE_RESOURCE_GROUP }} --location eastus
+           az appservice plan create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --name ${{ env.AZURE_APP_PLAN }} --is-linux --sku S1
+           az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_APIAPP_NAME }}  --runtime "DOTNETCORE|3.1"
+           az webapp config appsettings set -g ${{ env.AZURE_RESOURCE_GROUP }} -n ${{ env.AZURE_APIAPP_NAME}} --settings StorageConnectionString=${{ env.secrets.STORAGECONNECTIONSTRING }}
+ 
+      # Setup .NET Core SDK
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }} 
+      
+      # Run dotnet build and publish for API APP
+      - name: dotnet build and publish for API APP
+        run: |
+          dotnet restore
+          dotnet build --configuration Release
+          dotnet publish -c Release -o ./apiapp
+    
+      # Deploy to Azure API Web apps
+      - name: 'Run Azure webapp deploy action using service principal'
+        uses: azure/webapps-deploy@v2
+        with: 
+          app-name: ${{ env.AZURE_APIAPP_NAME }} # Replace with your app name
+          package: '/home/runner/work/handsonlab/handsonlab/src/API/apiapp/'
+      
+                      
+  buildWebApp:
+    runs-on: ubuntu-latest
+    needs: [buildAPIAPP]
+    defaults:
+      run:
+        working-directory: ./src/Web
+
+    steps:
+      # Checkout the repo
+      - uses: actions/checkout@master
+
+   # Authentication
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.DEPLOYGITHUB  }}
+         
+# Provision a Frontend Web App
+      - name: Azure CLI script to create a new Web App for Container
+        uses: azure/CLI@v1
+        with:
+         azcliversion: latest
+         inlineScript: |
+           az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME }}  --runtime "DOTNETCORE|3.1"
+           az webapp config appsettings set -g ${{ env.AZURE_RESOURCE_GROUP }} -n ${{ env.AZURE_WEBAPP_NAME}} --settings ApiUrl=${{ env.AZURE_API_URL }}
+ 
+      # Setup .NET Core SDK
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }} 
+      
+      # Run dotnet build and publish for WebAPP
+      - name: dotnet build and publish for WebAPP
+        run: |
+          dotnet restore
+          dotnet build --configuration Release
+          dotnet publish -c Release -o ./webapp
+          
+      # Deploy to Azure Web apps
+      - name: 'Run Azure webapp deploy action using service principal'
+        uses: azure/webapps-deploy@v2
+        with: 
+          app-name: ${{ env.AZURE_WEBAPP_NAME }} # Replace with your app name
+          package: '/home/runner/work/handsonlab/handsonlab/src/Web/webapp/'
