@@ -1,0 +1,38 @@
+name: Workflow to Deploy nodejs on Azure Webapp
+
+on:
+  push:
+    branches:
+      - labfornodejs
+    paths:
+    - 'README.md' 
+
+env:
+  AZURE_WEBAPP_NAME: vijaynodejswebsite          # set this to your application's name
+  AZURE_WEBAPP_PACKAGE_PATH: '.'                 # set this to the path to your web app project, defaults to the repository root
+  NODE_VERSION: '12.x'                           # set this to the node version to use
+  AZURE_RESOURCE_GROUP: handsonlab               # set this to your Azure Resource group's name  
+  AZURE_LOCATION: eastus                         # set this to your azure resource group location   
+  AZURE_APP_PLAN: nodejsplan                     # set this to your App service plan's name
+  
+jobs:
+  nodejsbuild-and-deploy:
+    name: nodejs Build and Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+  
+   # Authentication
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.DEPLOYGITHUB  }}
+        
+# Provision a new Web App
+    - name: Azure CLI script to create a new Web App for Container
+      uses: azure/CLI@v1
+      with:
+        azcliversion: latest
+        inlineScript: |
+          az group create --name ${{ env.AZURE_RESOURCE_GROUP }} --location ${{ env.AZURE_LOCATION }}
+          az appservice plan create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --name ${{ env.AZURE_APP_PLAN }} --is-linux --sku S1
+          az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME }}  --runtime "NODE|12-lts"
