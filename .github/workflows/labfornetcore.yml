@@ -17,6 +17,7 @@ env:
   AZURE_APIAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
   AZURE_WEBAPP_PACKAGE_PATH: '.'
   DOTNET_VERSION: '3.1.x'           # set this to the dot net version to use
+  GITHUB_REPOSISTORY_NAME: 'DevopsWithGithub-Hands-on-Labs'  
 
 jobs:
   buildAPIAPP:
@@ -44,7 +45,7 @@ jobs:
            az group create --name ${{ env.AZURE_RESOURCE_GROUP }} --location eastus
            az appservice plan create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --name ${{ env.AZURE_APP_PLAN }} --is-linux --sku S1
            az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_APIAPP_NAME }}  --runtime "DOTNETCORE|3.1"
-           az webapp config appsettings set -g ${{ env.AZURE_RESOURCE_GROUP }} -n ${{ env.AZURE_APIAPP_NAME}} --settings StorageConnectionString=${{ env.secrets.STORAGECONNECTIONSTRING }}
+           az webapp config appsettings set -g ${{ env.AZURE_RESOURCE_GROUP }} -n ${{ env.AZURE_APIAPP_NAME}} --settings StorageConnectionString=${{ secrets.STORAGECONNECTIONSTRING }}
  
       # Setup .NET Core SDK
       - name: Setup .NET Core
@@ -58,13 +59,13 @@ jobs:
           dotnet restore
           dotnet build --configuration Release
           dotnet publish -c Release -o ./apiapp
-    
+             
       # Deploy to Azure API Web apps
       - name: 'Run Azure webapp deploy action using service principal'
         uses: azure/webapps-deploy@v2
         with: 
           app-name: ${{ env.AZURE_APIAPP_NAME }} # Replace with your app name
-          package: '/home/runner/work/DevopsWithGithub-Hands-on-Labs/DevopsWithGithub-Hands-on-Labs/src/API/apiapp/'
+          package: '/home/runner/work/${{ env.GITHUB_REPOSISTORY_NAME }}/${{ env.GITHUB_REPOSISTORY_NAME }}/src/API/apiapp'
       
                       
   buildWebApp:
@@ -104,10 +105,10 @@ jobs:
           dotnet restore
           dotnet build --configuration Release
           dotnet publish -c Release -o ./webapp
-          
+                    
       # Deploy to Azure Web apps
       - name: 'Run Azure webapp deploy action using service principal'
         uses: azure/webapps-deploy@v2
         with: 
           app-name: ${{ env.AZURE_WEBAPP_NAME }} # Replace with your app name
-          package: '/home/runner/work/DevopsWithGithub-Hands-on-Labs/DevopsWithGithub-Hands-on-Labs/src/Web/webapp/'
+          package: '/home/runner/work/${{ env.GITHUB_REPOSISTORY_NAME }}/${{ env.GITHUB_REPOSISTORY_NAME }}/src/Web/webapp'
