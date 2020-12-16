@@ -21,6 +21,7 @@ Here is command line reference to create one service principal for you
 az ad sp create-for-rbac --name "myApp" --role contributor --scopes /subscriptions/{subscription-id}/resourceGroups/{resource-group} --sdk-auth
 
 **Giving access to Complete Subscription**
+
 az ad sp create-for-rbac --name "myApp" --role contributor --scopes /subscriptions/{subscription-id} --sdk-auth
 
 Output of this will be similar 
