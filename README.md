@@ -26,7 +26,9 @@ az ad sp create-for-rbac --name "myApp" --role contributor --scopes /subscriptio
 
 Output of this will be similar 
 
+
   {
+  
     "clientId": "<GUID>",
   
     "clientSecret": "<GUID>",
