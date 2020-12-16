@@ -16,7 +16,12 @@ Before Getting on to Hands on Labs, Lets us do Walkthrough Basic Terminology of 
 Service Principal is used to Authenticate and perform task on Azure subscription.
 Here is command line reference to create one service principal for you
 
+**If you already have created Resource group, following this**
+
 az ad sp create-for-rbac --name "myApp" --role contributor --scopes /subscriptions/{subscription-id}/resourceGroups/{resource-group} --sdk-auth
+
+**Giving access to Complete Subscription**
+az ad sp create-for-rbac --name "myApp" --role contributor --scopes /subscriptions/{subscription-id} --sdk-auth
 
 Output of this will be similar 
 
