@@ -1,0 +1,247 @@
+apply plugin: 'groovy'
+apply plugin: 'war'
+apply plugin: 'jetty'
+apply plugin: 'maven'
+
+import groovy.sql.Sql
+import groovy.time.TimeCategory
+
+repositories {
+  mavenCentral()
+}
+
+configurations {
+    driver
+}
+dependencies {
+  driver group: 'mysql', name: 'mysql-connector-java', version: '5.1.36'
+
+  providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+  runtime 'javax.servlet:jstl:1.2'
+  runtime 'mysql:mysql-connector-java:5.1.36'
+  
+  testCompile "junit:junit:4.12"
+  testRuntime 'mysql:mysql-connector-java:5.1.36'
+}
+
+tasks.withType(Test) {
+  exclude "**/DataTests.class"
+}
+
+war {
+  baseName "myshuttledev"
+  webInf { from 'src/main/webap/WEB-INF' }
+}
+
+task hello {
+  doLast {
+    println "Howdy"
+  }
+}
+
+////////
+// Destructive way of ensuring that Tomcat has a good user cred set
+// for the Manager GUI for easier admin of Tomcat in an Azure VM
+// instance
+//
+// On my Mac it's 
+String tomcatDir = '/usr/local/Cellar/tomcat/8.0.30/libexec/'
+// On Ubuntu it's
+//String tomcatDir = '/var/lib/tomcat7/'
+
+println "Tomcat:" + tomcatDir
+
+task setUpTomcatConf(type: Copy) {
+  // Copy src/tomcat-conf/tomcat-users.xml to destination
+  from 'src/tomcat-conf/tomcat-users.xml'
+  into tomcatDir + 'conf'
+}
+setUpTomcatConf.doLast {
+  println "tomcat-users.xml:" + file(tomcatDir + 'conf/tomcat-users.xml').text
+}
+
+task deploy(type: Copy) {
+  description 'Copies the WAR file to ' + tomcatDir
+  from 'build/libs/myshuttledev.war'
+  into tomcatDir + 'webapps'
+}
+//deploy.outputs.upToDateWhen { false }
+deploy.dependsOn war
+
+URLClassLoader loader = GroovyObject.class.classLoader
+configurations.driver.each {File file ->
+  loader.addURL(file.toURL())
+}
+
+def dbProps = [user: 'user', password: 'password', allowMultiQueries: 'true'] as Properties
+def dbUrl = 'jdbc:mysql://localhost:3306'
+def dbDriver = 'com.mysql.jdbc.Driver'
+
+////////
+// Create the database; assumes (deliberately) the database does not exist
+// Does not try to do any kind of db migration
+//
+task createDB << {
+  Sql.withInstance(dbUrl, dbProps, dbDriver) { sql ->
+    sql.execute 'CREATE DATABASE alm;'
+
+    sql.execute 'USE alm;'
+
+    sql.execute '''
+CREATE TABLE employees (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  username VARCHAR(20),
+  password VARCHAR(20)
+);
+'''
+
+    sql.execute '''
+CREATE TABLE fares (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  emp_id INT,
+  pickup VARCHAR(50) COMMENT 'Street address',
+  dropoff VARCHAR(50) COMMENT 'Street address',
+  start DATETIME,
+  end DATETIME,
+  fare_charge INT COMMENT 'USD in pennies',
+  driver_fee INT COMMENT 'USD in pennies',
+  passenger_rating TINYINT UNSIGNED COMMENT 'From 0 to 5',
+  driver_rating TINYINT UNSIGNED COMMENT 'From 0 to 5',
+  FOREIGN KEY (emp_id) references employees(id)
+);
+'''
+  }
+}
+
+////////
+// Seed the database with employees
+//
+task seedDB << {
+  Sql.withInstance(dbUrl, dbProps, dbDriver) { sql ->
+    sql.execute 'USE alm';
+    
+    // Populate with a few users
+    def insertSql = "INSERT INTO employees (username, password) VALUES (?,?)"
+    sql.executeInsert insertSql, ['fred', 'fredpassword']
+    sql.executeInsert insertSql, ['barney', 'barneypassword']
+    sql.executeInsert insertSql, ['wilma', 'wilmapassword']
+    sql.executeInsert insertSql, ['betty', 'bettypassword']
+    
+    // Verify they got added
+    sql.eachRow('SELECT id, username, password FROM employees') { row ->
+      println("    Found ${row.id}: ${row.username} / ${row.password}")
+    }
+  }
+}
+
+////////
+// Add some randomly-generated data to make it look like an employee
+// has just handled a new fare
+//
+def randomFare() {
+  Random randomer = new java.util.Random();
+
+  def emp_id = (randomer.nextInt(4) + 1);
+
+  def streets = (String[]) [
+    "Hunting Lane",
+    "Mammoth Way",
+    "Wooly Way",
+    "Shale St",
+    "Hard Rock Pl",
+    "Brontosaurus Blvd",
+    "Stegasaurus St"
+  ];
+  def cities = (String[]) [
+    "Bedrock, WA",
+    "Limestone, WA",
+    "Topsoil, WA",
+    "Rock Gardens, WA"
+  ];
+  def pickup = (randomer.nextInt(100) + 1) + " " +
+    (streets[randomer.nextInt(streets.length)]) + ", " +
+    (cities[randomer.nextInt(cities.length)]);
+  def dropoff = (randomer.nextInt(100) + 1) + " " +
+    (streets[randomer.nextInt(streets.length)]) + ", " +
+    (cities[randomer.nextInt(cities.length)]);
+
+  def date = Date.parse("dd-MM-yyyy", "01-01-2014").plus(randomer.nextInt(600))
+  def start = null
+  def end = null
+  use (TimeCategory) {
+    def startHour = randomer.nextInt(24);
+    def startMinute = randomer.nextInt(60);
+    start = date + startHour.hours + startMinute.minutes
+    end = start + (randomer.nextInt(45)).minutes
+  }
+  
+  def fare = 500 + (randomer.nextInt(2500))
+  def fee = (int) (fare * 0.75)
+
+  def d_rating = (randomer.nextInt(5)) + 1
+  def p_rating = (randomer.nextInt(5)) + 1
+
+  return [
+    emp_id : emp_id,
+    pickup : pickup,
+    dropoff : dropoff,
+    start : start,
+    end : end,
+    fare_charge : fare,
+    driver_fee : fee,
+    d_rating : d_rating,
+    p_rating : p_rating
+  ]
+}
+
+// Simple test to verify randomization works; shouldn't be
+// needed for any other purpose
+task testAddFares << {
+  Random randomer = new java.util.Random();
+  def numFares = 10
+  println "Adding $numFares fares into the database"
+
+  (1..numFares).each {
+    def fare = randomFare()
+    println "Employee $fare.emp_id drove from $fare.pickup to $fare.dropoff from $fare.start to $fare.end;" + 
+      " charged $fare.fare_charge, earned $fare.driver_fee; Passenger: $fare.p_rating; Driver: $fare.d_rating"
+  }
+}
+
+
+////////
+// Stick some random fares into the database
+//
+task addFares << {
+  Random randomer = new java.util.Random();
+  def numFares = randomer.nextInt(10) + 1;
+  println "Adding $numFares fares into the database"
+
+  Sql.withInstance(dbUrl, dbProps, dbDriver) { sql ->
+    sql.execute 'USE alm';
+    
+    (1..numFares).each {
+      def fare = randomFare()
+      println "Employee $fare.emp_id drove from $fare.pickup to $fare.dropoff from $fare.start to $fare.end;" + 
+        " charged $fare.fare_charge, earned $fare.driver_fee; Passenger: $fare.p_rating; Driver: $fare.d_rating"
+      
+      def insertSql = "INSERT INTO fares " + 
+        "(emp_id, pickup, dropoff, start, end, fare_charge, driver_fee, passenger_rating, driver_rating) " + 
+        "VALUES (?,?,?,?,?,?,?,?,?)"
+      sql.executeInsert insertSql, [fare.emp_id, fare.pickup, fare.dropoff, fare.start, fare.end, fare.fare_charge, fare.driver_fee, fare.p_rating, fare.d_rating]
+    }
+  }
+}
+
+////////
+// Drop the database; typically used as the predecessor to createDB,
+// as a cheap (and destructive!) way of doing db migrations
+//
+task dropDB << {
+  Sql.withInstance(dbUrl, dbProps, dbDriver) { sql ->
+    sql.execute '''
+DROP DATABASE alm;
+'''
+  }
+}
+

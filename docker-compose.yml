@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+  web:
+    image: web
+    build:
+      context: .
+      dockerfile: ./src/Dockerfile
+    depends_on:
+      - db
+    ports: 
+      - "8081:8080"
+  db:
+    image: db
+    build:
+      context: ./src/db
+      dockerfile: Dockerfile
+    expose:
+      - "3306"

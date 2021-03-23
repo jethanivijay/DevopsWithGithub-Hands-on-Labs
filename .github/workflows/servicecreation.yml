@@ -1,0 +1,47 @@
+name: mySql database automation
+
+on:
+  push:
+    branches:
+      - appservicemysql
+    paths:
+    - 'readmeforservicecreation.md' 
+
+env:
+  AZURE_RESOURCE_GROUP: vijayappmysql               # set this to your Azure Resource group's name  
+  AZURE_LOCATION: eastus                         # set this to your azure resource group location   
+  AZURE_MYSQL_SERVERNAME: vijayappmysql         # set MYSQL Server  
+  AZURE_MYSQL_DATABASE: alm    # set MYSQL Databsae
+  AZURE_MYSQLFIREWALL_IP: 0.0.0.0    # set this to all Azure IPs
+  APPPLAN: vijayappmysql
+  APPSERVICE: vijayappmysql
+  
+
+jobs:
+  azuresetup:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.DEPLOYGITHUB }}
+
+# Provision a Azure MYSQL Database on Azure
+    - name: Appservice and MySql Database creation
+      uses: azure/CLI@v1
+      with:
+        azcliversion: latest
+        inlineScript: |
+          az group create --name ${{ env.AZURE_RESOURCE_GROUP }} --location ${{ env.AZURE_LOCATION }}
+          az mysql server create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --name ${{ env.AZURE_MYSQL_SERVERNAME }} --location ${{ env.AZURE_LOCATION }} --admin-user ${{ secrets.MYSQLADMINUSER }} --admin-password ${{ secrets.MYSQLADMINPASS }} --sku-name B_Gen5_2
+          az mysql server firewall-rule create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --server ${{ env.AZURE_MYSQL_SERVERNAME }} --name AllowMyIP --start-ip-address ${{ env.AZURE_MYSQLFIREWALL_IP }} --end-ip-address ${{ env.AZURE_MYSQLFIREWALL_IP }}
+          az mysql db create --name ${{ env.AZURE_MYSQL_DATABASE }} --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --server-name ${{ env.AZURE_MYSQL_SERVERNAME }}
+          az appservice plan create -g ${{ env.AZURE_RESOURCE_GROUP }} -n ${{ env.APPSERVICE }} --is-linux --sku S1 -l ${{ env.AZURE_LOCATION }}
+          az webapp create -g ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.APPPLAN }} --name ${{ env.APPSERVICE }} -i ngnix
+          az webapp config container set -g ${{ env.AZURE_RESOURCE_GROUP }} --name ${{ env.APPSERVICE }} --docker-registry-server-url https://vijaygithubregistry.azurecr.io --docker-registry-server-user ${{ secrets.REGISTRY_USERNAME }} --docker-registry-server-password ${{ secrets.REGISTRY_PASSWORD }}
+          az webapp config connection-string set -g ${{ env.AZURE_RESOURCE_GROUP }} --name ${{ env.APPSERVICE }} -t mysql --settings MyShuttleDb='${{ secrets.MYSHUTTLEDB }}'
+          
+    # Azure logout 
+    - name: logout
+      run: |
+        az logout 
