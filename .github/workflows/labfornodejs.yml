@@ -3,7 +3,7 @@ name: Workflow to Deploy nodejs on Azure Webapp
 on:
   push:
     branches:
-      - labfornodejs
+      - EXPRESSJS
     paths:
     - 'README.md' 
 
