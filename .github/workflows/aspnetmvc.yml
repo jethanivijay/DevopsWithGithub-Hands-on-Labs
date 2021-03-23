@@ -1,11 +1,11 @@
-name: Hands on Lab for NETCORE
+name: Hands on Lab for ASPNETMVC
 
 on:
   push:
     branches:
-      - labfornetcore
+      - ASPNETMVC
     paths:
-    - 'README.md' 
+    - 'READMEASPNETMVC.md'
 
 env:
   AZURE_RESOURCE_GROUP: handsonlab               # set this to your Azure Resource group's name  
