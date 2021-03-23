@@ -1,6 +1,6 @@
 # EXPRESS JS on Azure App service
 
-# In this Labs, we are automating following tasks using Github Actions.
+# In this Lab, we are automating following tasks using Github Actions.
 
 1. Connect to Azure
 2. Create Azure Services
