@@ -1,0 +1,71 @@
+name: Build and Deploy simple PHP app to Azure
+
+on:
+  push:
+    branches:
+      - working
+    paths:
+    - readmephplinux.md 
+
+env:
+  AZURE_WEBAPP_NAME: "vijayphpapp"    # set this to your application's name
+  AZURE_WEBAPP_PACKAGE_PATH: "Application"      # set this to the path to your web app project, defaults to the Application folder
+  RESOURCEGROUPNAME: "vijayphpapp"
+  LOCATION: "eastus"
+  HOSTINGPLANNAME: "vijayphpapp"
+  APPINSIGHTLOCATION: "eastus"
+  SKU: "S1 Standard"
+
+jobs:
+  Build:
+    name: Build and Run tests
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    # Uploading application to artifact store
+    - name: Upload Application artifact
+      continue-on-error: false
+      uses: actions/upload-artifact@v2
+      with:
+        name: buildartifacts
+        path: Application
+
+  Deploy:
+    name: Deploy to azure web app
+    needs: Build
+    runs-on: ubuntu-latest
+    steps:
+    
+    - uses: actions/checkout@v2
+     
+    # Downloading build artifact
+    - name: Download Build Artifact
+      uses: actions/download-artifact@v2
+      continue-on-error: false
+      with:
+        name: buildartifacts
+        path: Application
+
+    # Azure Login
+    - name: Azure Login
+      uses: azure/login@v1
+      continue-on-error: false
+      with:
+        creds: ${{ secrets.DEPLOYGITHUB }}
+
+    # Deploy ARM Template
+    - name: Deploy ARM Template
+      uses: azure/CLI@v1
+      continue-on-error: false
+      with:
+        inlineScript: |
+          az group create --name "${{ env.RESOURCEGROUPNAME }}" --location "${{ env.LOCATION }}"
+          az deployment group create --resource-group "${{ env.RESOURCEGROUPNAME }}" --template-file ./ArmTemplates/linux-webapp-template.json --parameters webAppName="${{ env.AZURE_WEBAPP_NAME }}" hostingPlanName="${{ env.HOSTINGPLANNAME }}" appInsightsLocation="${{ env.APPINSIGHTLOCATION }}" sku="${{ env.SKU }}"
+
+    # Deploy web app
+    - name: 'Deploy to Azure WebApp'
+      uses: azure/webapps-deploy@v2
+      with: 
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
