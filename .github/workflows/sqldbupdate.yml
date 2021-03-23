@@ -1,0 +1,33 @@
+name: Sql database update
+
+on:
+  push:
+    branches:
+      - sqldb
+    paths:
+    - 'readmeforsqlupdate.md' 
+env:
+  AZURE_SQL_SERVERNAME: vijaysqldbserver.database.windows.net 
+
+jobs:
+  azuresetup:
+    
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.DEPLOYGITHUB }}
+
+     
+    - uses: azure/sql-action@v1
+      with:
+       server-name: ${{ env.AZURE_SQL_SERVERNAME }}
+       connection-string: ${{ secrets.SQLCONNECTIONSTRING }}
+       dacpac-package: './vijaysqldatabase.dacpac'
+
+    # Azure logout 
+    - name: logout
+      run: |
+        az logout 
+ 
