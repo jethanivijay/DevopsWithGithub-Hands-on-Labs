@@ -1,0 +1,30 @@
+name: mySql database update
+
+on:
+  push:
+    branches:
+      - postgresql
+    paths:
+    - readmeforpostgresqlupdate.md
+env:
+  AZURE_POSTGRESQL_SERVERNAME: vijaypostgresqlserver.postgres.database.azure.com 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+     - uses: actions/checkout@v2.3.2
+     - uses: Azure/login@v1
+       with:
+         creds: ${{ secrets.DEPLOYGITHUB }}
+     - uses: azure/postgresql@v1
+       with:
+         connection-string: ${{ secrets.AZURE_POSTGRESQL_CONNECTION_STRING }}
+         server-name: ${{ env.AZURE_POSTGRESQL_SERVERNAME }}
+         plsql-file: "vijaypostgresql.sql"
+
+    # Azure logout 
+     - name: logout
+       run: |
+        az logout 
