@@ -1,0 +1,41 @@
+name: mySql database automation
+
+on:
+  push:
+    branches:
+      - mysql
+    paths:
+    - 'readmeformysql.md' 
+
+env:
+  AZURE_RESOURCE_GROUP: vijaymysqldb               # set this to your Azure Resource group's name  
+  AZURE_LOCATION: eastus                         # set this to your azure resource group location   
+  AZURE_MYSQL_SERVERNAME: vijaymysqldbserver         # set MYSQL Server  
+  AZURE_MYSQL_DATABASE: vijaymysqldatabase    # set MYSQL Databsae
+  AZURE_MYSQLFIREWALL_IP: 0.0.0.0    # set this to all Azure IPs
+  
+
+jobs:
+  azuresetup:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.DEPLOYGITHUB }}
+
+# Provision a Azure MYSQL Database on Azure
+    - name: Azure MYSQL Server creation
+      uses: azure/CLI@v1
+      with:
+        azcliversion: latest
+        inlineScript: |
+          az group create --name ${{ env.AZURE_RESOURCE_GROUP }} --location eastus
+          az mysql server create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --name ${{ env.AZURE_MYSQL_SERVERNAME }} --location ${{ env.AZURE_LOCATION }} --admin-user ${{ secrets.MYSQLADMINUSER }} --admin-password ${{ secrets.MYSQLADMINPASS }} --sku-name B_Gen5_2
+          az mysql server firewall-rule create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --server ${{ env.AZURE_MYSQL_SERVERNAME }} --name AllowMyIP --start-ip-address ${{ env.AZURE_MYSQLFIREWALL_IP }} --end-ip-address ${{ env.AZURE_MYSQLFIREWALL_IP }}
+          az mysql db create --name ${{ env.AZURE_MYSQL_DATABASE }} --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --server-name ${{ env.AZURE_MYSQL_SERVERNAME }}
+ 
+    # Azure logout 
+    - name: logout
+      run: |
+        az logout 
