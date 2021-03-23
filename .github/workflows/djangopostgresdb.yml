@@ -1,0 +1,99 @@
+name: Hands on Lab for AppservicewithSqldb
+
+on:
+  push:
+    branches:
+      - apppostgresql
+    paths:
+    - 'READMEdjango.md' 
+
+env:
+  RESOURCEGROUP: vijaydjangopostgresdb
+  APPPLAN: DjangoServicePlan
+  APPSERVICE: vijaydjangopostgresdb
+  POSTGRESSERVER: vijaydjangopostgresdb
+  POSTGRESDB: vijaypostgresdb
+  LOCATION: eastus
+  ALLOWCLIENTIP: 0.0.0.0
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+       
+    steps: 
+    - uses: actions/checkout@v2
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.DEPLOYGITHUB }}
+
+# Provision a Azure MYSQL Database on Azure
+    - name: Azure POSTGRESQL Server creation
+      uses: azure/CLI@v1
+      with:
+        azcliversion: latest
+        inlineScript: |
+          az group create --name ${{ env.RESOURCEGROUP }} --location ${{ env.LOCATION }}
+          az postgres server create --resource-group ${{ env.RESOURCEGROUP }} --name ${{ env.POSTGRESSERVER }}  --location ${{ env.LOCATION }} --admin-user ${{ secrets.POSTGREDBADMIN }} --admin-password ${{ secrets.POSTGREDBPASS }} --sku-name B_Gen5_2
+          az postgres server firewall-rule create --resource-group ${{ env.RESOURCEGROUP }} --server ${{ env.POSTGRESSERVER }} --name AllowMyIP --start-ip-address ${{ env.ALLOWCLIENTIP }}  --end-ip-address ${{ env.ALLOWCLIENTIP }}
+          az postgres db create -g ${{ env.RESOURCEGROUP }} -s ${{ env.POSTGRESSERVER }} -n ${{ env.POSTGRESDB }} 
+          az appservice plan create -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPPLAN }} --is-linux --sku S1 -l ${{ env.LOCATION }}
+          az webapp create -g ${{ env.RESOURCEGROUP }} --plan ${{ env.APPPLAN }} --name ${{ env.APPSERVICE }} --runtime "PYTHON|3.7"
+          az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DATABASE_NAME=${{ env.POSTGRESDB }}
+          az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DATABASE_USER=${{ secrets.POSTGREDBADMIN }}
+          az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DATABASE_PASSWORD=${{ secrets.POSTGREDBPASS }}
+          az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DATABASE_HOST=${{ env.POSTGRESDB }}.postgres.database.azure.com
+          az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DATABASE_PORT=5432
+
+
+    - name: Setup Python version
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Create and start virtual environment
+      run: |
+        python3 -m venv venv
+        source venv/bin/activate
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: Collect static
+      run: python manage.py collectstatic
+
+    - name: Run tests
+      run: python manage.py test
+    
+    - name: Upload artifact for deployment jobs
+      uses: actions/upload-artifact@v2
+      with:
+        name: python-app
+        path: |
+          . 
+          !venv/
+  
+  deploy-to-webapp:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: python-app
+          path: .
+      
+      - name: Log in to Azure CLI
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.DEPLOYGITHUB }}
+    
+      - name: Disable static collection and set migration command on App Service
+        uses: Azure/appservice-settings@v1
+        with:  
+          app-name: ${{ env.APPSERVICE }}
+          app-settings-json: '[{ "name": "DISABLE_COLLECTSTATIC", "value": "true" }, { "name": "POST_BUILD_COMMAND",  "value": "python manage.py makemigrations && python manage.py migrate" }, { "name": "SCM_DO_BUILD_DURING_DEPLOYMENT", "value": "true" }, { "name": "DJANGO_ENV", "value": "production"}]'
+
+      - name: Deploy to App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.APPSERVICE }}
