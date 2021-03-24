@@ -3,11 +3,11 @@ name: mySql database update
 on:
   push:
     branches:
-      - appservicemysql
+      - JavaMySQLdb
     paths:
     - readmemysqlupdate.md
 env:
-  MYSQLSERVERNAME: vijayappmysql.mysql.database.azure.com
+  MYSQLSERVERNAME: vijayjavamysql.mysql.database.azure.com
 
 jobs:
   mysqlupdate:
