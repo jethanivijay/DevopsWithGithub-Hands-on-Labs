@@ -11,7 +11,7 @@ env:
   AZURE_SQL_SERVERNAME: vijaysqldbserver.database.windows.net 
 
 jobs:
-  azuresetup:
+  sqldbupdate:
     
     runs-on: windows-latest
     steps:
