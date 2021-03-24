@@ -3,7 +3,8 @@ name: Postgresdb update
 on:
   push:
     branches:
-      - apppostgresql
+      - DjangoPostgresdb
+
     paths:
     - readmeforpostgresqlupdate.md
 env:
