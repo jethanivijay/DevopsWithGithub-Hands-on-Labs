@@ -12,7 +12,7 @@ env:
   APPPLAN: Djangopostgresplan
   APPSERVICE: vijaydjangopostgres
   POSTGRESSERVER: vijaydjangopostgres
-  POSTGRESDB: vijaypostgresdb
+  POSTGRESDB: pollsdb
   LOCATION: eastus
   ALLOWCLIENTIP: 0.0.0.0
 
@@ -27,8 +27,8 @@ jobs:
       with:
         creds: ${{ secrets.DEPLOYGITHUB }}
 
-# Provision a Azure MYSQL Database on Azure
-    - name: Azure POSTGRESQL Server creation
+# Provision Azure Setup for Django and Postgresdb
+    - name: Azure Setup for Django and Postgresdb
       uses: azure/CLI@v1
       with:
         azcliversion: latest
@@ -39,11 +39,11 @@ jobs:
           az postgres db create -g ${{ env.RESOURCEGROUP }} -s ${{ env.POSTGRESSERVER }} -n ${{ env.POSTGRESDB }} 
           az appservice plan create -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPPLAN }} --is-linux --sku S1 -l ${{ env.LOCATION }}
           az webapp create -g ${{ env.RESOURCEGROUP }} --plan ${{ env.APPPLAN }} --name ${{ env.APPSERVICE }} --runtime "PYTHON|3.8"
-          az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DATABASE_NAME=${{ env.POSTGRESDB }}
-          az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DATABASE_USER=${{ secrets.POSTGREDBADMIN }}
-          az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DATABASE_PASSWORD=${{ secrets.POSTGREDBPASS }}
-          az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DATABASE_HOST=${{ env.POSTGRESSERVER }}.postgres.database.azure.com
-          az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DATABASE_PORT=5432
+          az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DBNAME=${{ env.POSTGRESDB }}
+          az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DBUSER=${{ secrets.POSTGREDBADMIN }}
+          az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DBPASS=${{ secrets.POSTGREDBPASS }}
+          az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DBHOST=${{ env.POSTGRESSERVER }}.postgres.database.azure.com
+          az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DBPORT=5432
 
 
     - name: Setup Python version
