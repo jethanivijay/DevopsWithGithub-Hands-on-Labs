@@ -1,4 +1,4 @@
-name: Polls App using Django and Postgresdb
+name: Build and Deploy
 
 on:
   push:
@@ -26,24 +26,6 @@ jobs:
     - uses: azure/login@v1
       with:
         creds: ${{ secrets.DEPLOYGITHUB }}
-
-# Provision Azure Setup for Django and Postgresdb
-    - name: Azure Setup for Django and Postgresdb
-      uses: azure/CLI@v1
-      with:
-        azcliversion: latest
-        inlineScript: |
-          az group create --name ${{ env.RESOURCEGROUP }} --location ${{ env.LOCATION }}
-          az postgres server create --resource-group ${{ env.RESOURCEGROUP }} --name ${{ env.POSTGRESSERVER }}  --location ${{ env.LOCATION }} --admin-user ${{ secrets.POSTGREDBADMIN }} --admin-password ${{ secrets.POSTGREDBPASS }} --sku-name B_Gen5_2
-          az postgres server firewall-rule create --resource-group ${{ env.RESOURCEGROUP }} --server ${{ env.POSTGRESSERVER }} --name AllowMyIP --start-ip-address ${{ env.ALLOWCLIENTIP }}  --end-ip-address ${{ env.ALLOWCLIENTIP }}
-          az postgres db create -g ${{ env.RESOURCEGROUP }} -s ${{ env.POSTGRESSERVER }} -n ${{ env.POSTGRESDB }} 
-          az appservice plan create -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPPLAN }} --is-linux --sku S1 -l ${{ env.LOCATION }}
-          az webapp create -g ${{ env.RESOURCEGROUP }} --plan ${{ env.APPPLAN }} --name ${{ env.APPSERVICE }} --runtime "PYTHON|3.8"
-          az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DBNAME=${{ env.POSTGRESDB }}
-          az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DBUSER=${{ secrets.POSTGREDBADMIN }}
-          az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DBPASS=${{ secrets.POSTGREDBPASS }}
-          az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DBHOST=${{ env.POSTGRESSERVER }}
-          az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DBPORT=5432
 
 
     - name: Setup Python version
