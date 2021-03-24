@@ -3,7 +3,8 @@ name: PostgreSql database automation
 on:
   push:
     branches:
-      - postgresql
+      - AzurePostgresDatabase
+
     paths:
     - 'readmepostgresqlcreate.md' 
 
