@@ -1,5 +1,6 @@
 # Welcome to DevOps with Github - HandsonLabs
 
+Source code of each lab is placed in their respective branches , Please click on Link provide under each of Lab
 
 # Lab 1 : Create Online Polls using Django App and PostgreSQL DB
 [Link : Django App and PostgreSQL DB](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/DjangoPostgresdb)
