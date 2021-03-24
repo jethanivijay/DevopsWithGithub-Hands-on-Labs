@@ -1,4 +1,4 @@
-name: mySql database update
+name: Posgres db updated
 
 on:
   push:
@@ -10,7 +10,7 @@ env:
   AZURE_POSTGRESQL_SERVERNAME: vijaypostgresqlserver.postgres.database.azure.com 
 
 jobs:
-  build:
+  postgresdbupdate:
     runs-on: ubuntu-latest
     
     steps:
