@@ -3,9 +3,9 @@ name: Code Build and MY SQL Database update
 on:
   push:
     branches:
-      - appservicemysql
+      - JavaMySQLdb
     paths:
-    - readmeappservicemysql.md 
+    - readmejavamysql.md 
 
 jobs:
   build_and_test:
@@ -48,7 +48,7 @@ jobs:
      
         - uses: azure/webapps-deploy@v2
           with:
-            app-name: 'vijayappmysql'
+            app-name: 'vijayjavamysql'
             images: 'vijaygithubregistry.azurecr.io/webmysql:${{ github.sha }}'
   
   mysqlupdate:
@@ -61,6 +61,6 @@ jobs:
    
     - uses: azure/mysql@v1
       with:
-        server-name: vijayappmysql.mysql.database.azure.com
+        server-name: vijayjavamysql.mysql.database.azure.com
         connection-string: ${{ secrets.MYSHUTTLECONNECTION }}
         sql-file: './CreateMYSQLDB.sql'
