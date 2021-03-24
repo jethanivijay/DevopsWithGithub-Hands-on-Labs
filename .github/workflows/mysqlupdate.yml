@@ -23,7 +23,7 @@ jobs:
     - uses: azure/mysql@v1
       with:
         server-name: ${{ env.MYSQLSERVERNAME }}
-        connection-string: ${{ secrets.VIJAYAPPMYSQL }}
+        connection-string: ${{ secrets.MYSHUTTLECONNECTION }}
         sql-file: './myshuttledbupdate.sql'
 
     # Azure logout 
