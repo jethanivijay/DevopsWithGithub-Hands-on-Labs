@@ -5,7 +5,7 @@ on:
     branches:
       - DjangoPostgresdb
     paths:
-    - 'readmeservicecreation.md' 
+    - 'readmedjangobuilddeploy.md' 
 
 env:
   RESOURCEGROUP: vijaydjangopostgres
