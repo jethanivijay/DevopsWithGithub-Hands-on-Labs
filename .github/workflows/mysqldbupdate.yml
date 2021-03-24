@@ -3,7 +3,8 @@ name: mySql database update
 on:
   push:
     branches:
-      - mysql
+      - AzureMYSQLDatabase
+
     paths:
     - readmeformysqlupdate.md
 env:
