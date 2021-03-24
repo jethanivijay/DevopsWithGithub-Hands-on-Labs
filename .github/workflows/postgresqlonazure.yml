@@ -34,7 +34,9 @@ jobs:
           az group create --name ${{ env.AZURE_RESOURCE_GROUP }} --location ${{ env.AZURE_LOCATION }}
           az postgres server create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --name ${{ env.AZURE_POSTGRESQL_SERVERNAME }}  --location ${{ env.AZURE_LOCATION }} --admin-user ${{ secrets.POSTGREDBADMIN }} --admin-password ${{ secrets.POSTGREDBPASS }} --sku-name B_Gen5_2 
           az postgres server firewall-rule create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --server ${{ env.AZURE_POSTGRESQL_SERVERNAME }} --name AllowMyIP --start-ip-address ${{ env.AZURE_POSTGRESQL_FIREWALL_IP }} --end-ip-address ${{ env.AZURE_POSTGRESQL_FIREWALL_IP }}
-
+          az postgres db create -g ${{ env.AZURE_RESOURCE_GROUP }} -s ${{ env.AZURE_POSTGRESQL_SERVERNAME }} -n ${{ env.AZURE_POSTGRESQL_DATABASE }}
+          
+                   
 # Azure logout 
     - name: logout
       run: |
