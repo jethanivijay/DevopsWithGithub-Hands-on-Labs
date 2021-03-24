@@ -8,13 +8,13 @@ on:
     - 'readmeforservicecreation.md' 
 
 env:
-  AZURE_RESOURCE_GROUP: vijayappmysql               # set this to your Azure Resource group's name  
+  AZURE_RESOURCE_GROUP: vijayjavamysql               # set this to your Azure Resource group's name  
   AZURE_LOCATION: eastus                         # set this to your azure resource group location   
-  AZURE_MYSQL_SERVERNAME: vijayappmysql         # set MYSQL Server  
+  AZURE_MYSQL_SERVERNAME: vijayjavamysql         # set MYSQL Server  
   AZURE_MYSQL_DATABASE: alm    # set MYSQL Databsae
   AZURE_MYSQLFIREWALL_IP: 0.0.0.0    # set this to all Azure IPs
-  APPPLAN: vijayappmysql
-  APPSERVICE: vijayappmysql
+  APPPLAN: vijayjavamysql
+  APPSERVICE: vijayjavamysql
   
 
 jobs:
