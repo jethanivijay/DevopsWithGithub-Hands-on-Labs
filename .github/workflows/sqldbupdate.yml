@@ -3,7 +3,8 @@ name: Sql database update
 on:
   push:
     branches:
-      - sqldb
+      - AzureSQLDatabase
+
     paths:
     - 'readmeforsqlupdate.md' 
 env:
