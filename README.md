@@ -4,6 +4,7 @@
 
 As Part of this Lab, we are performing following tasks.
 
-1. Creation of Azure services
-2. Creation of Azure Database for Postgres 
-3. Update Azure Postgres database scheme and data as code
+1. Creation of Azure PostgreS Server
+2. Setting up firewall rules
+3. Creation of Azure Database for Postgres 
+4. Update Azure Postgres database scheme and data as code
