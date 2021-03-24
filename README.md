@@ -3,34 +3,34 @@
 ### Source code of each lab is placed in their respective branches, Please click respective Lab link.
 
 
-# Lab 1 : Create Online Polls using Django App and PostgreSQL DB
+## Lab 1 : Create Online Polls using Django App and PostgreSQL DB
 [Link : Django App and PostgreSQL DB](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/DjangoPostgresdb)
 
-# Lab 2 : Create Webapp for Car Rental Vendor to track Trip and expenses using Java and MySQL
+## Lab 2 : Create Webapp for Car Rental Vendor to track Trip and expenses using Java and MySQL
 [Link : Java and MySQL DB ](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/JavaMySQLdb)
 
-# Lab 3 : Create Webapp for FastFood Restaurant using ASP.NET MVC APP and Azure Storage Account
+## Lab 3 : Create Webapp for FastFood Restaurant using ASP.NET MVC APP and Azure Storage Account
 [Link : ASP.NET MVC](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/ASPNETMVC)
 
-# Lab 4 : Create SailJs App on Azure using Node and Javascript
+## Lab 4 : Create SailJs App on Azure using Node and Javascript
 [Link : SailJs using Node and Javascript ](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/SAILJS)
 
-# Lab 5 : Create PHP App on Azure using PHP and CSS
+## Lab 5 : Create PHP App on Azure using PHP and CSS
 [Link : PHP and CSS](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/PHP)
 
-# Lab 6 : Azure SQL Database and update database as code
+## Lab 6 : Azure SQL Database and update database as code
 [Link : AzureSQLDatabase](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/AzureSQLDatabase)
 
-# Lab 7 : Azure MYSQL Database and update database as code
+## Lab 7 : Azure MYSQL Database and update database as code
 [Link : AzureMYSQL](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/AzureMYSQLDatabase)
 
-# Lab 8 : Azure Postgres Database and update database as code
+## Lab 8 : Azure Postgres Database and update database as code
 [Link : AzurePostgresDatabase](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/AzurePostgresDatabase)
 
-# Lab 9 : Creake AKS Cluster and Deploy App using Helm
+## Lab 9 : Creake AKS Cluster and Deploy App using Helm
 [Link : AKS](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/AKS)
 
-# Lab 10 : Create Express App using NodeJs
+## Lab 10 : Create Express App using NodeJs
 [Link : EXPRESSJS](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/EXPRESSJS)
 
 
