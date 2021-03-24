@@ -1,4 +1,4 @@
-name: Polls App using Django and Postgresdb
+name: Polls App using Django and Postgresdb service creation
 
 on:
   push:
@@ -17,7 +17,7 @@ env:
   ALLOWCLIENTIP: 0.0.0.0
 
 jobs:
-  build:
+  servicecreate:
     runs-on: ubuntu-latest
     
        
