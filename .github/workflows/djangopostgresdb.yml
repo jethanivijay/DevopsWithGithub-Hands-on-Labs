@@ -1,17 +1,17 @@
-name: Hands on Lab for AppservicewithSqldb
+name: Polls App using Django and Postgresdb
 
 on:
   push:
     branches:
-      - apppostgresql
+      - DjangoPostgresdb
     paths:
-    - 'READMEdjango.md' 
+    - 'readmeservicecreation.md' 
 
 env:
-  RESOURCEGROUP: vijaydjangopostgresdb
-  APPPLAN: DjangoServicePlan
-  APPSERVICE: vijaydjangopostgresdb
-  POSTGRESSERVER: vijaydjangopostgresdb
+  RESOURCEGROUP: vijaydjangopostgres
+  APPPLAN: Djangopostgresplan
+  APPSERVICE: vijaydjangopostgres
+  POSTGRESSERVER: vijaydjangopostgres
   POSTGRESDB: vijaypostgresdb
   LOCATION: eastus
   ALLOWCLIENTIP: 0.0.0.0
@@ -38,11 +38,11 @@ jobs:
           az postgres server firewall-rule create --resource-group ${{ env.RESOURCEGROUP }} --server ${{ env.POSTGRESSERVER }} --name AllowMyIP --start-ip-address ${{ env.ALLOWCLIENTIP }}  --end-ip-address ${{ env.ALLOWCLIENTIP }}
           az postgres db create -g ${{ env.RESOURCEGROUP }} -s ${{ env.POSTGRESSERVER }} -n ${{ env.POSTGRESDB }} 
           az appservice plan create -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPPLAN }} --is-linux --sku S1 -l ${{ env.LOCATION }}
-          az webapp create -g ${{ env.RESOURCEGROUP }} --plan ${{ env.APPPLAN }} --name ${{ env.APPSERVICE }} --runtime "PYTHON|3.7"
+          az webapp create -g ${{ env.RESOURCEGROUP }} --plan ${{ env.APPPLAN }} --name ${{ env.APPSERVICE }} --runtime "PYTHON|3.8"
           az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DATABASE_NAME=${{ env.POSTGRESDB }}
           az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DATABASE_USER=${{ secrets.POSTGREDBADMIN }}
           az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DATABASE_PASSWORD=${{ secrets.POSTGREDBPASS }}
-          az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DATABASE_HOST=${{ env.POSTGRESDB }}.postgres.database.azure.com
+          az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DATABASE_HOST=${{ env.POSTGRESSERVER }}.postgres.database.azure.com
           az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DATABASE_PORT=5432
 
 
