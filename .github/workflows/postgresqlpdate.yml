@@ -3,7 +3,7 @@ name: mySql database update
 on:
   push:
     branches:
-      - postgresql
+      - AzurePostgresDatabase
     paths:
     - readmeforpostgresqlupdate.md
 env:
