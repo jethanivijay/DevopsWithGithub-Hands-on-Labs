@@ -3,9 +3,10 @@ name: Sql database automation
 on:
   push:
     branches:
-      - sqldb
+      - AzureSQLDatabase
+
     paths:
-    - 'readmenorun.md' 
+    - 'readmeservicecreate.md' 
 
 env:
   AZURE_RESOURCE_GROUP: vijaysqldb               # set this to your Azure Resource group's name  
@@ -30,22 +31,10 @@ jobs:
       with:
         azcliversion: latest
         inlineScript: |
-          az group create --name ${{ env.AZURE_RESOURCE_GROUP }} --location eastus
+          az group create --name ${{ env.AZURE_RESOURCE_GROUP }} --location ${{ env.AZURE_LOCATION }}
           az sql server create --name ${{ env.AZURE_SQL_SERVERNAME }} --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --location ${{ env.AZURE_LOCATION }} --admin-user ${{ secrets.SQLADMINUSER }}  --admin-password ${{ secrets.SQLADMINPASS }}
           az sql server firewall-rule create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --server ${{ env.AZURE_SQL_SERVERNAME }} -n AllowYourIp --start-ip-address ${{ env.AZURE_SQLFIREWALL_IP }} --end-ip-address ${{ env.AZURE_SQLFIREWALL_IP }}
           az sql db create -g ${{ env.AZURE_RESOURCE_GROUP }} -s ${{ env.AZURE_SQL_SERVERNAME }} -n ${{ env.AZURE_SQL_DATABASE }} --service-objective S0
- #        SQLDBCONNECTIONSTRINGBLANK=$(az sql db show-connection-string --client ado.net --name ${{ env.AZURE_SQL_DATABASE }} --server ${{ env.AZURE_SQL_SERVERNAME }} --output json | jq -r .)
- #        SQLDBCONNECTIONSTRINGUSER=${SQLDBCONNECTIONSTRINGBLANK/<username>/${{ secrets.SQLADMINUSER }}}
- #        SQLDBCONNECTIONSTRINGUSERPASS=${SQLDBCONNECTIONSTRINGUSER/<password>/${{ secrets.SQLADMINPASS }}}
- #        echo $SQLDBCONNECTIONSTRINGUSERPASS
- #    env:
- #      SQLCONNECTIONSTRING: $SQLDBCONNECTIONSTRINGUSERPASS           
-  
- #  - uses: azure/sql-action@v1
- #    with:
- #      server-name: ${{ env.AZURE_SQL_SERVERNAME }}
- #      connection-string: ${{ secret.SQLCONNECTIONSTRING }}
- #      sql-file: './vijaysqldatabase.dacpac'
 
     # Azure logout 
     - name: logout
