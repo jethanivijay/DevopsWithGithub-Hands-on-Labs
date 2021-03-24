@@ -11,7 +11,7 @@ env:
   AZURE_POSTGRESQL_SERVERNAME: vijaydjangopostgres.postgres.database.azure.com 
 
 jobs:
-  build:
+  postgresdbupdate:
     runs-on: ubuntu-latest
     
     steps:
