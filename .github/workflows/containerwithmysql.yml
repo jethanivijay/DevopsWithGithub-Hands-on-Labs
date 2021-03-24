@@ -62,5 +62,5 @@ jobs:
     - uses: azure/mysql@v1
       with:
         server-name: vijayappmysql.mysql.database.azure.com
-        connection-string: ${{ secrets.VIJAYAPPMYSQL }}
+        connection-string: ${{ secrets.MYSHUTTLECONNECTION }}
         sql-file: './CreateMYSQLDB.sql'
