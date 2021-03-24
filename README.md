@@ -4,6 +4,7 @@
 
 As Part of this Labs, we are performing following tasks.
 
-1. Creation of Azure services
-2. Creation of Azure Database for MySQL 
-3. Update MYSQL Database as code
+1. Creation of Azure MySQL Server
+2. Setting Firewall rules
+3. Creation of Azure Database for MySQL 
+4. Update MYSQL Database as code
