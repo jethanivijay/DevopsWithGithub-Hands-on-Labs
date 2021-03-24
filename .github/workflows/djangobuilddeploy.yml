@@ -42,7 +42,7 @@ jobs:
           az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DBNAME=${{ env.POSTGRESDB }}
           az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DBUSER=${{ secrets.POSTGREDBADMIN }}
           az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DBPASS=${{ secrets.POSTGREDBPASS }}
-          az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DBHOST=${{ env.POSTGRESSERVER }}.postgres.database.azure.com
+          az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DBHOST=${{ env.POSTGRESSERVER }}
           az webapp config appsettings set -g ${{ env.RESOURCEGROUP }} -n ${{ env.APPSERVICE }} --settings DBPORT=5432
 
 
