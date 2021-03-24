@@ -1,6 +1,6 @@
 # DataOps on MySQLDB
 
-# This Lab is intended to use Github Actions workflow for Creation of Azure Services and Database updates.
+## This Lab use Github Actions workflow for Creation of Azure Services and Database updates.
 
 As Part of this Labs, we are performing following tasks.
 
