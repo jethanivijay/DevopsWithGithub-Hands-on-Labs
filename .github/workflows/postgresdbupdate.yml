@@ -1,4 +1,4 @@
-name: Postgresdb upate
+name: Postgresdb update
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     paths:
     - readmeforpostgresqlupdate.md
 env:
-  AZURE_POSTGRESQL_SERVERNAME: vijaydjangopostgresdb.postgres.database.azure.com 
+  AZURE_POSTGRESQL_SERVERNAME: vijaydjangopostgres.postgres.database.azure.com 
 
 jobs:
   build:
@@ -20,7 +20,7 @@ jobs:
          creds: ${{ secrets.DEPLOYGITHUB }}
      - uses: azure/postgresql@v1
        with:
-         connection-string: ${{ secrets.AZURE_POSTGRESQL_CONNECTION_STRING }}
+         connection-string: ${{ secrets.DJANGOPOSTGRESCONNECTION }}
          server-name: ${{ env.AZURE_POSTGRESQL_SERVERNAME }}
          plsql-file: "pollsdbupdate.sql"
 
