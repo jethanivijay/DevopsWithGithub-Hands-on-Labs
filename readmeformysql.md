@@ -1,1 +1,1 @@
-   
+Creation of mysql database
