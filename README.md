@@ -2,15 +2,14 @@
 
 ### Source code of each lab is placed in their respective branches, Please click respective Lab link.
 
+## Lab 1 : Create Express App using NodeJs
+[Link : EXPRESSJS](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/EXPRESSJS)
 
-## Lab 1 : Create Online Polls using Django App and PostgreSQL DB
-[Link : Django App and PostgreSQL DB](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/DjangoPostgresdb)
-
-## Lab 2 : Create Webapp for Car Rental Vendor to track Trip and expenses using Java and MySQL
-[Link : Java and MySQL DB ](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/JavaMySQLdb)
-
-## Lab 3 : Create Webapp for FastFood Restaurant using ASP.NET MVC APP and Azure Storage Account
+## Lab 2 : Create Webapp for FastFood Restaurant using ASP.NET MVC APP
 [Link : ASP.NET MVC](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/ASPNETMVC)
+
+## Lab 3 : Creake AKS Cluster and Deploy App using Helm
+[Link : AKS](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/AKS)
 
 ## Lab 4 : Create SailJs App on Azure using Node and Javascript
 [Link : SailJs using Node and Javascript ](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/SAILJS)
@@ -27,13 +26,11 @@
 ## Lab 8 : Azure Postgres Database and update database as code
 [Link : AzurePostgresDatabase](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/AzurePostgresDatabase)
 
-## Lab 9 : Creake AKS Cluster and Deploy App using Helm
-[Link : AKS](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/AKS)
+## Lab 9  : Create Online Polls using Django App and PostgreSQL DB
+[Link : Django App and PostgreSQL DB](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/DjangoPostgresdb)
 
-## Lab 10 : Create Express App using NodeJs
-[Link : EXPRESSJS](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/EXPRESSJS)
-
-
+## Lab 10 : Create Webapp for Car Rental Vendor using Java and MySQL
+[Link : Java and MySQL DB ](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/JavaMySQLdb)
 
 #  Instructions to Get Started on this Labs
 
