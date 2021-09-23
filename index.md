@@ -1,37 +1,76 @@
-## Welcome to GitHub Pages
+# Welcome to DevOps with Github - HandsonLabs
 
-You can use the [editor on GitHub](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+### Source code of each lab is placed in their respective branches, Please click respective Lab link.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Lab 1 : Create Express App using NodeJs
+[Link : EXPRESSJS](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/EXPRESSJS)
 
-### Markdown
+## Lab 2 : Create Webapp for FastFood Restaurant using ASP.NET MVC APP
+[Link : ASP.NET MVC](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/ASPNETMVC)
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## Lab 3 : Creake AKS Cluster and Deploy App using Helm
+[Link : AKS](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/AKS)
 
-```markdown
-Syntax highlighted code block
+## Lab 4 : Create SailJs App on Azure using Node and Javascript
+[Link : SailJs using Node and Javascript ](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/SAILJS)
 
-# Header 1
-## Header 2
-### Header 3
+## Lab 5 : Create PHP App on Azure using PHP and CSS
+[Link : PHP and CSS](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/PHP)
 
-- Bulleted
-- List
+## Lab 6 : Azure SQL Database and update database as code
+[Link : AzureSQLDatabase](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/AzureSQLDatabase)
 
-1. Numbered
-2. List
+## Lab 7 : Azure MYSQL Database and update database as code
+[Link : AzureMYSQL](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/AzureMYSQLDatabase)
 
-**Bold** and _Italic_ and `Code` text
+## Lab 8 : Azure Postgres Database and update database as code
+[Link : AzurePostgresDatabase](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/AzurePostgresDatabase)
 
-[Link](url) and ![Image](src)
-```
+## Lab 9  : Create Online Polls using Django App and PostgreSQL DB
+[Link : Django App and PostgreSQL DB](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/DjangoPostgresdb)
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+## Lab 10 : Create Webapp for Car Rental Vendor using Java and MySQL
+[Link : Java and MySQL DB ](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/JavaMySQLdb)
 
-### Jekyll Themes
+#  Instructions to Get Started on this Labs
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+**Prequisite(Mandate)**
+1. Github Personal Account
+2. Azure Subscription
 
-### Support or Contact
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+**[Reference 1 : Workflow Syntax for Github Actions ](https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions)**
+
+
+**Reference 2 : Connecting to Azure**
+
+Service Principal is used to Authenticate and perform task on Azure subscription.
+Here is command line reference to create one service principal for you
+
+**Giving access to Complete Subscription**
+
+az ad sp create-for-rbac --name "myApp" --role contributor --scopes /subscriptions/{subscription-id} --sdk-auth
+
+**If you want scope of service principal retricted to resource Group follow command below**
+
+az ad sp create-for-rbac --name "myApp" --role contributor --scopes /subscriptions/{subscription-id}/resourceGroups/{resource-group} --sdk-auth
+
+Output of this will be similar 
+
+
+  {
+  
+    "clientId": "<GUID>",
+  
+    "clientSecret": "<GUID>",
+    
+    "subscriptionId": "<GUID>",
+    
+    "tenantId": "<GUID>",
+    
+    (...)
+    
+  }
+
+Copy Complete Parenthesis and create Github Secret , This will be our First Github Secret !
+
