@@ -1,3 +1,6 @@
+---
+layout: default
+---
 # Welcome to DevOps with Github - HandsonLabs
 
 ### Source code of each lab is placed in their respective branches, Please click respective Lab link.
