@@ -1,8 +1,4 @@
 
-# Welcome to DevOps with Github - HandsonLabs
-
-### Source code of each lab is placed in their respective branches, Please click respective Lab link.
-
 ## Lab 1 : Create Express App using NodeJs
 [Link : EXPRESSJS](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/EXPRESSJS)
 
