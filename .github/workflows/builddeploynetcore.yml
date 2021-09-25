@@ -13,7 +13,7 @@ env:
   AZURE_APP_PLAN: netcoreplan1                    # set netcoreplan  
   AZURE_APIAPP_NAME: vijayapiapp1    # set this to your application's name
   AZURE_API_URL: 'https://vijayapiapp1.azurewebsites.net/'  
-  AZURE_WEBAPP_NAME: vijayfrontwebapp1    # set this to your frontend webapp name
+  AZURE_WEBAPP_NAME: vijayfrontweb1    # set this to your frontend webapp name
   AZURE_APIAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
   AZURE_WEBAPP_PACKAGE_PATH: '.'
   DOTNET_VERSION: '3.1.x'           # set this to the dot net version to use
