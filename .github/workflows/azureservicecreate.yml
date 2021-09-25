@@ -37,4 +37,4 @@ jobs:
           az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_APIAPP_NAME }}  --runtime "DOTNETCORE|3.1"
           az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME }}  --runtime "DOTNETCORE|3.1"
           az storage account create -n ${{ env.AZURE_STORAGE_ACCOUNT }} --resource-group ${{ env.AZURE_RESOURCE_GROUP }} -l ${{ env.AZURE_LOCATION }} --sku Standard_LRS
-          az storage container create -n images --account-name ${{ env.AZURE_STORAGE_ACCOUNT }} --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --public-access blob
+          az storage container create -n images --account-name ${{ env.AZURE_STORAGE_ACCOUNT }} --public-access blob
