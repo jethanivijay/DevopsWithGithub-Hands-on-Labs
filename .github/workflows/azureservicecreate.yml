@@ -13,7 +13,7 @@ env:
   AZURE_LOCATION: eastus                          # set this to your azure resource group location   
   AZURE_APP_PLAN: netcoreplan                     # set netcoreplan  
   AZURE_APIAPP_NAME: vijayapiapp1                 # set this to your API Website name
-  AZURE_WEBAPP_NAME: vijaywebapp1                 # set this to your frontend website name
+  AZURE_WEBAPP_NAME: vijayfrontweb1               # set this to your frontend website name
 
 
 jobs:
@@ -27,7 +27,7 @@ jobs:
       - uses: azure/login@v1  	       # Authenticate to Azure
         with:
           creds: ${{ secrets.DEPLOYGITHUB }}  
-      - name: Azure CLI script to create a new Web App for Container
+      - name: Azure CLI script to create azure services on subscription
         uses: azure/CLI@v1
         with:
          azcliversion: latest
