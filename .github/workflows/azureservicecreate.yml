@@ -1,0 +1,46 @@
+name: Azure Service Creation Workflow for ASPNETMVC Lab
+
+on:
+  push:
+    branches:
+      - ASPNETMVC
+    paths:
+    - 'AZURESERVICECREATE.md'
+
+env:
+  AZURE_RESOURCE_GROUP: handsonlab1              # set this to your Azure Resource group's name
+  AZURE_STORAGE_ACCOUNT: vijaystorageaccount      # set this to your Azure Storage account name for images
+  AZURE_LOCATION: eastus                          # set this to your azure resource group location   
+  AZURE_APP_PLAN: netcoreplan                     # set netcoreplan  
+  AZURE_APIAPP_NAME: vijayapiapp1                 # set this to your API Website name
+  AZURE_WEBAPP_NAME: vijaywebapp1                 # set this to your frontend website name
+
+
+jobs:
+  CREATEAZURESERVICES:
+    runs-on: ubuntu-latest
+
+
+    steps:
+
+      - uses: actions/checkout@master  # Checkout the repo to Hosted Runner
+      
+
+
+      - uses: azure/login@v1  		   # Authenticate to Azure
+        with:
+          creds: ${{ secrets.DEPLOYGITHUB  }}
+		  
+		  
+# Create Storage Account, API Website and Frontend Website
+      - name: Action to Create Storage Account, API Website and FrontendWebSite
+        uses: azure/CLI@v1
+        with:
+         azcliversion: latest
+         inlineScript: |
+           az group create --name ${{ env.AZURE_RESOURCE_GROUP }} --location eastus
+		       az storage account create -n ${{ env.AZURE_STORAGE_ACCOUNT }} -g ${{ env.AZURE_RESOURCE_GROUP }} -l ${{ env.AZURE_LOCATION }} --sku Standard_LRS
+		       az storage container create --name images --account-name ${{ env.AZURE_STORAGE_ACCOUNT }} --public-access blob
+           az appservice plan create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --name ${{ env.AZURE_APP_PLAN }} --is-linux --sku S1
+           az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_APIAPP_NAME }}  --runtime "DOTNETCORE|3.1"
+		       az webapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --plan ${{ env.AZURE_APP_PLAN }} --name ${{ env.AZURE_WEBAPP_NAME }}  --runtime "DOTNETCORE|3.1"
