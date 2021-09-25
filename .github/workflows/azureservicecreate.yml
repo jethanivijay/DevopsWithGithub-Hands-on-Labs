@@ -3,9 +3,9 @@ name: Azure Service Creation Workflow for ASPNETMVC Lab
 on:
   push:
     branches:
-      - ASPNETMVC
+    - ASPNETMVC
     paths:
-      - AZURESERVICECREATE.md
+    - SERVICECREATE.md
 
 env:
   AZURE_RESOURCE_GROUP: handsonlab1              # set this to your Azure Resource group's name
