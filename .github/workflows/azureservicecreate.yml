@@ -11,7 +11,7 @@ env:
   AZURE_RESOURCE_GROUP: handsonlab1              # set this to your Azure Resource group's name
   AZURE_STORAGE_ACCOUNT: vijaystorageaccount      # set this to your Azure Storage account name for images
   AZURE_LOCATION: eastus                          # set this to your azure resource group location   
-  AZURE_APP_PLAN: netcoreplan                     # set netcoreplan  
+  AZURE_APP_PLAN: netcoreplan1                    # set netcoreplan  
   AZURE_APIAPP_NAME: vijayapiapp1                 # set this to your API Website name
   AZURE_WEBAPP_NAME: vijayfrontweb1               # set this to your frontend website name
 
