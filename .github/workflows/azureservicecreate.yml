@@ -23,14 +23,10 @@ jobs:
 
     steps:
 
-      - uses: actions/checkout@master  # Checkout the repo to Hosted Runner
-      
-
-
-      - uses: azure/login@v1  		   # Authenticate to Azure
+      - uses: actions/checkout@master  # Checkout the repo to Hosted Runner 
+      - uses: azure/login@v1  	       # Authenticate to Azure
         with:
-          creds: ${{ secrets.DEPLOYGITHUB  }}
-	  
+          creds: ${{ secrets.DEPLOYGITHUB }}  
       - name: Azure CLI script to create a new Web App for Container
         uses: azure/CLI@v1
         with:
