@@ -5,7 +5,7 @@ on:
     branches:
       - ASPNETMVC
     paths:
-    - 'AZURESERVICECREATE.md'
+    - AZURESERVICECREATE.md
 
 env:
   AZURE_RESOURCE_GROUP: handsonlab1              # set this to your Azure Resource group's name
