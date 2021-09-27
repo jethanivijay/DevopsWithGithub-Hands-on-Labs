@@ -99,26 +99,3 @@ jobs:
       with: 
         app-name: ${{ env.APPNAME }} 
         images: ${{ env.REGISTRYNAME }}.azurecr.io/${{ env.IMAGENAME }}:${{ github.sha }}
-
-# Job to run functional tests
-  FunctionalTests:
-    name: Run Functional tests
-    runs-on: windows-latest
-    needs: deploy
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Use Node.js ${{ env.NODE_VERSION }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ env.NODE_VERSION }}
-
-    # Run functional tests
-    - name: set up test environment and run tests
-      continue-on-error: false
-      run: |
-        cd Application
-        npm install
-        cd ../Tests
-        npm install
-        gulp functionaltest --webAppUrl https://${{ env.APPNAME }}.azurewebsites.net/
