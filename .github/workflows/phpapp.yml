@@ -18,7 +18,7 @@ env:
 
 jobs:
   Build:
-    name: Build and Run tests
+    name: Upload PHP Artifacts
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -32,7 +32,7 @@ jobs:
         path: Application
 
   Deploy:
-    name: Deploy to azure web app
+    name: Deploy to PHP Webapp
     needs: Build
     runs-on: ubuntu-latest
     steps:
