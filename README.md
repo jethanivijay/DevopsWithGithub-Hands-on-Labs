@@ -74,8 +74,3 @@ Output of this will be similar
 
 Copy Complete Parenthesis and create Github Secret , This will be our First Github Secret !
 
-
-
-## Source code of each lab is placed in branches as shown
-
-![codebranches](/Codebranches.JPG)
