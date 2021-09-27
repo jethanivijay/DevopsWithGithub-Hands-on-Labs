@@ -1,6 +1,5 @@
 # Welcome to DevOps with Github - HandsonLabs
 
-### Source code of each lab is placed in their respective branches, Please click respective Lab link.
 
 ## Lab 1 : Create Express App using NodeJs
 [Link : EXPRESSJS](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/EXPRESSJS)
@@ -31,6 +30,7 @@
 
 ## Lab 10 : Create Webapp for Car Rental Vendor using Java and MySQL
 [Link : Java and MySQL DB ](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/JavaMySQLdb)
+
 
 #  Instructions to Get Started on this Labs
 
@@ -73,3 +73,9 @@ Output of this will be similar
   }
 
 Copy Complete Parenthesis and create Github Secret , This will be our First Github Secret !
+
+
+
+## Source code of each lab is placed in branches as shown
+
+![codebranches](/Codebranches.JPG)
