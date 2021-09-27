@@ -36,7 +36,7 @@ jobs:
         creds: ${{ secrets.DEPLOYGITHUB }}
 
     - name: Create Resource Group
-      run: az group create -n ${{ env.RESOURCEGROUPNAME }} -l ${{ env.LOCATION }}
+      run: az group create -n ${{ env.RESOURCEGROUPNAME }} -l eastus
       
     - uses: azure/arm-deploy@v1
       id: createAcr
