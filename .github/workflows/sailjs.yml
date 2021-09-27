@@ -14,8 +14,8 @@ env:
   DOCKERFILEPATH: "Application"
   REGISTRYSKU: "Standard"
   REGISTRYNAME: "vijaysailjsacr"
-  REGISTRYLOCATION: "South Central US"
-  IMAGENAME: "vijaysailjs1497"
+  REGISTRYLOCATION: "EAST US"
+  IMAGENAME: "vijaysailjs7"
   RESOURCEGROUPNAME: vijaysailjs-rg
   LOCATION: East US
   APPINSIGHTSLOCATION: East US
