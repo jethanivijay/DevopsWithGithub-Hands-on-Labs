@@ -3,7 +3,7 @@ name: Build and Deploy simple PHP app to Azure
 on:
   push:
     branches:
-      - working
+      - PHP
     paths:
     - readmephplinux.md 
 
