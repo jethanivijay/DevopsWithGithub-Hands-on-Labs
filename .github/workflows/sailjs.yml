@@ -3,7 +3,7 @@ name: Build and deploy Docker app to Azure
 on:
   push:
     branches:
-      - working
+      - SAILJS
     paths:
     - readmesailjs.md
     
@@ -21,7 +21,7 @@ env:
   APPINSIGHTSLOCATION: East US
   SUBSCRIPTIONID: c5e95693-4d23-4d5c-ad8d-904f30699ecc
   SKU: S1 Standard
-  NODE_VERSION: 8.11.1
+  NODE_VERSION: 16.x
 
 jobs:
   build:
