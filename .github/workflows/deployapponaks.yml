@@ -2,9 +2,9 @@ name: Build and Deploy to AKS
 on:
   push:
     branches:
-      - working
+      - AKS
     paths:
-      - readmeaks.md
+      - READMEAKS.md
 
 env:
   RESOURCEGROUPNAME: "vijayaksapp"
