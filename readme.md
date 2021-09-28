@@ -1,7 +1,5 @@
 # AKS Setup on Azure
 
-## Application Framework : NET CORE 3.1 LTS
-
 ## Instructions for automating AKS Deployment using Github Actions.
 
 1. Review Source code and Workflow file and do appropriate naming changes to reflect your Azure services
