@@ -8,12 +8,12 @@ on:
     - 'READMEEXPRESSJS.md' 
 
 env:
-  AZURE_WEBAPP_NAME: vijayhandsonlabnodejs          # set this to your application's name
+  AZURE_WEBAPP_NAME: hemalihandsonlabnodejs          # set this to your application's name
   AZURE_WEBAPP_PACKAGE_PATH: '.'                 # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '12.x'                           # set this to the node version to use
-  AZURE_RESOURCE_GROUP: vijayhandsonlab               # set this to your Azure Resource group's name  
+  AZURE_RESOURCE_GROUP: hemalihandsonlab               # set this to your Azure Resource group's name  
   AZURE_LOCATION: eastus                         # set this to your azure resource group location   
-  AZURE_APP_PLAN: vijaynodejsplan                     # set this to your App service plan's name
+  AZURE_APP_PLAN: hemalinodejsplan                     # set this to your App service plan's name
   
 jobs:
   nodejsbuild-and-deploy:
