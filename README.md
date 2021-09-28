@@ -5,7 +5,7 @@
 
 ![expressjs](expressjs.png)
 
-## Instructions EXRESSJS Automation tasks using Github Actions.
+## Instructions EXRESSJS Automation using Github Actions
 
 1. Review Source code and Workflow file and do appropriate naming changes to reflect your Azure services
 2. Ensure your environment variables and Github Secrets are set properly otherwise your workflow will fail
