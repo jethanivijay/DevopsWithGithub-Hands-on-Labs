@@ -1,7 +1,10 @@
-# EXPRESS JS on Azure App service
+# Github Actions Hands on Lab on EXPRESSJS
+
+![expressjs](expressjs.png)
 
 # In this Lab, we are automating following tasks using Github Actions.
 
-1. Connect to Azure
-2. Create Azure Services
-3. Deploy EXPRESS JS Code to Azure APP Service
+1. Review Source code and Workflow file and do appropriate naming changes to reflect your Azure services
+2. Ensure your environment variables and Github Secrets are set properly otherwise your workflow will fail
+3. Create Azure Services using Github Actions Workflow by editing READMEEXPRESSJS.md file
+4. Browse your Express Website
