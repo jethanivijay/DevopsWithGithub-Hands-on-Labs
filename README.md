@@ -5,7 +5,7 @@
 ![fastfoodarchitecture](/FastFoodArch.JPG)
 
 
-## Netcore Hands on Labs with Github Actions
+## Instructions Netcore Hands on Labs with Github Actions
 
 1. Review Source code and Workflow file and do appropriate naming changes to reflect your Azure services
 2. Create Azure Services using Github Actions Workflow by editing SERVICECREATE.md file
