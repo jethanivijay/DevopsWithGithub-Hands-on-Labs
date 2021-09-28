@@ -8,12 +8,12 @@ on:
     - buildanddeploy.md
 
 env:
-  AZURE_RESOURCE_GROUP: handsonlab1               # set this to your Azure Resource group's name  
+  AZURE_RESOURCE_GROUP: vijayhandsonlab               # set this to your Azure Resource group's name  
   AZURE_LOCATION: eastus                         # set this to your azure resource group location   
-  AZURE_APP_PLAN: netcoreplan1                    # set netcoreplan  
-  AZURE_APIAPP_NAME: vijayapiapp1    # set this to your application's name
-  AZURE_API_URL: 'https://vijayapiapp1.azurewebsites.net/'  
-  AZURE_WEBAPP_NAME: vijayfrontweb1    # set this to your frontend webapp name
+  AZURE_APP_PLAN: vijaynetcoreplan                    # set netcoreplan  
+  AZURE_APIAPP_NAME: vijayholapiapp    # set this to your application's name
+  AZURE_API_URL: 'https://vijayholapiapp.azurewebsites.net/'  
+  AZURE_WEBAPP_NAME: vijayholfrontweb    # set this to your frontend webapp name
   AZURE_APIAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
   AZURE_WEBAPP_PACKAGE_PATH: '.'
   DOTNET_VERSION: '3.1.x'           # set this to the dot net version to use
