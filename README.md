@@ -1,5 +1,8 @@
 # Github Actions Hands on Lab on EXPRESSJS
 
+- Framework : ExpressJs on NodeJS
+- Language  : JavaScript
+
 ![expressjs](expressjs.png)
 
 ## Instructions EXRESSJS Automation tasks using Github Actions.
