@@ -1,14 +1,14 @@
-# SailJs on Azure
+# Github Actions Lab on SailJs MVC Framework for Node
 
-# Language : JavaScript
+- Framework : SailJs MVC framework for Node
 
-# Framework : SailJs
+- Language : JavaScript
 
-# In this Lab, we are automating following tasks using Github Actions
+![sailjs](/SailJS.JPG)
 
-1. Connecting to Azure
-2. Create Azure Container registry for storing container image
-3. Building and Pushing Image to Azure Container registry
-4. Creation of Appservice service for containers
-5. Publishing code to App Service
-6. Functional testing for App service
+## Instructions : SAILJS Automation using Github Actions
+
+1. Review Source code and Workflow file and do appropriate naming changes to reflect your Azure services
+2. Ensure your environment variables and Github Secrets are set properly otherwise your workflow will fail
+3. Create Azure Services using Github Actions Workflow by editing readmesailjs.md file
+4. Browse your SailJS Website
