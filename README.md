@@ -32,14 +32,20 @@
 [BranchLink : Java and MySQL DB ](https://github.com/jethanivijay/DevopsWithGithub-Hands-on-Labs/tree/JavaMySQLdb)
 
 
-#  Instructions to Get Started on this Labs
+##  Instructions to Get Started on this Labs
 
 **Prequisite(Mandate)**
-1. Github Personal Account
-2. Azure Subscription
+### 1. Github Personal Account
 
+![GithubAccount](/GithubPersonalAccount.JPG)
 
-**[Reference 1 : Workflow Syntax for Github Actions ](https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions)**
+### 2. Azure Subscription
+
+![AzureFreeAccount](/AzureFreeAccount.JPG)
+
+## Step by Step Guides to help you get started ! 
+
+[**Reference 1 : Github Actions Syntax**](https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions)
 
 
 **Reference 2 : Connecting to Azure**
