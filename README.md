@@ -2,7 +2,7 @@
 
 ## Architecture Diagram
 
-![fastfoodarchitecture](/FastFoodArchitecture.JPG)
+![fastfoodarchitecture](/FastFoodArch.JPG)
 
 
 ## Netcore Hands on Labs with Github Actions
