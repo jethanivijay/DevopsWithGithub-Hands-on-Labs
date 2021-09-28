@@ -1,6 +1,6 @@
 # Github Actions Hands on Lab on EXPRESSJS
 
-- Framework : ExpressJs on NodeJS
+- WebFramework : ExpressJS on Node
 - Language  : JavaScript
 
 ![expressjs](expressjs.png)
