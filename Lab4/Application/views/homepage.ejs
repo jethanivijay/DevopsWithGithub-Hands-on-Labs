@@ -1,0 +1,84 @@
+<!-- Default home page -->
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600' rel='stylesheet' type='text/css'>
+<style>
+ html,
+        body {
+            height: 100%;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        @font-face{
+            font-family: "Segoe UI";
+            src: url('/fonts/segoeuil.ttf');
+        }
+        .main-container {
+            height: 100%;
+            width: 100%;
+            background-color: #190707;
+            color: white;
+            padding-top: 6%;
+            box-sizing: border-box;
+            overflow-y: auto;
+            overflow-x: hidden;
+            font-family: "Segoe UI";
+        }
+        .success-text {
+            padding-bottom: 20px;
+            font-size: 62px;
+            line-height: 73px;
+        }
+        .description {
+            font-size: 34px;
+            line-height: 40px;
+        }
+        .content {
+            box-sizing: border-box;
+            min-width: 700px;
+            max-width: 830px;
+            position: relative;
+            margin: auto;
+        }
+        }
+        .content-body{
+            min-width: 400px;
+        }
+        @media (max-width: 1024px) {
+            .main-container{
+                padding-top: 1%;
+            }
+           
+            .success-text {
+                font-size: 50px;
+                line-height: 61px;
+                padding-bottom: 10px;
+            }
+            .description {
+                font-size: 26px;
+                line-height: 30px;
+            }
+            .content{
+                max-width: 630px;
+                min-width: 630px;
+            }
+        }
+  
+</style>
+
+
+<script type="text/javascript">
+setTimeout(function sunrise () {
+  document.getElementsByClassName('header')[0].style.backgroundColor = 'black';
+}, 0);
+</script>
+
+
+<div class="main-container">
+        
+
+            <div class="content-body">
+                <div class="success-text">Success!</div>
+                <div class="description line-1"> Welcome to Github Hands on Lab session !</div>
+                <div class="description line-2"> Your Sailjs app is up and running on Azure now</div>
+            </div>
+</div>
