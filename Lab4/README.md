@@ -4,7 +4,7 @@
 
 - Language : JavaScript
 
-![sailjs](/SailJS.JPG)
+![sailjs](SailJS.JPG)
 
 ## Instructions : SAILJS Automation using Github Actions
 
