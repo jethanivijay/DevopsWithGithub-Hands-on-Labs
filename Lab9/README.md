@@ -3,7 +3,7 @@
 
 # Functional working diagram of Django framework
 
-![Functioning of Django with Db](/images/django.png)
+![Functioning of Django with Db](images/django.png)
 
 # In this Lab, we are automating following tasks using Github Actions.
 
