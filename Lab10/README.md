@@ -4,7 +4,7 @@
 # Framework/Languague : Java 
 # Technology Components : Appservice , Azure Database for Mysql , Azure Container registry, Github Actions Workflow
 
-![javamysql](/images/javamysql.png)
+![javamysql](images/javamysql.png)
 
 # In this Lab , we are performing following tasks using Github Action
 
