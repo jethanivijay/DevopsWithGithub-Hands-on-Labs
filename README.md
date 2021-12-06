@@ -1,6 +1,6 @@
 # Welcome to DevOps with Github - HandsonLabs
 
-## *Github Actions workflow for each Labs are in their branches, Please use Branchlink*
+## *Github Actions workflows for each Labs are in their branches, Please use Branchlink*
 
 
 ## Lab 1 : Create Express App using NodeJs
